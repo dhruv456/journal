@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.List;
 
-@Document(collation = "users")
+@Document(collection = "users")
 @Getter
 @Setter
 public class User {
