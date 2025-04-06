@@ -4,6 +4,8 @@ import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.repository.UserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +16,19 @@ public class UserEntryService {
 
     @Autowired
     private UserRepository userEntryRepository;
+    private final PasswordEncoder psw = new BCryptPasswordEncoder();
 
-    public boolean SaveEntry(User user) {
+    public void SaveEntry(User user) {
         userEntryRepository.save(user);
-        return true;
+    }
+
+    public void newSaveEntry(User user) {
+        user.setPassword(psw.encode(user.getPassword()));
+        userEntryRepository.save(user);
+    }
+
+    public User findByUserName(String username) {
+        return userEntryRepository.findByUsername(username);
     }
 
     public List<User> getAllUser() {
