@@ -24,7 +24,13 @@ public class UserEntryService {
 
     public void newSaveEntry(User user) {
         user.setPassword(psw.encode(user.getPassword()));
+        user.getRoles().add("USER");
         userEntryRepository.save(user);
+    }
+
+    public void saveAdminUser(User user) {
+        user.getRoles().add("ADMIN");
+        this.newSaveEntry(user);
     }
 
     public User findByUserName(String username) {
